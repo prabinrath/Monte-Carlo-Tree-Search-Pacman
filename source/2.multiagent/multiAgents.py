@@ -291,16 +291,12 @@ class MCTS:
     
 class MonteCarloTreeSearch(MultiAgentSearchAgent):
     """
-      Your expectimax agent (question 4)
+      MCTS Agent (question 4)
     """
 
     def getAction(self, gameState):
         """
-        Returns the expectimax action using self.depth and self.evaluationFunction
-
-        All ghosts should be modeled as choosing uniformly at random from their
-        legal moves.
+        Returns the best action for the given state using MCTS and self.evaluationFunction
         """
-        "*** YOUR CODE HERE ***"
         rootNode = MCTS(state=gameState)
         return rootNode.bestAction().get_parent_action()
