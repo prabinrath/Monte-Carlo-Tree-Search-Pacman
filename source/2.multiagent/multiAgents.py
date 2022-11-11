@@ -34,13 +34,13 @@ def scoreEvaluationFunction(currentGameState):
     # for ghost in newGhostStates:
     #     ghost_proximity += euclidianDistance(ghost.getPosition(), newPos)
 
-    # utility = currentGameState.getScore()
+    utility = currentGameState.getScore()
     utility=0    
     if currentGameState.isWin():
-        utility=1000    
+        utility+=1000    
     if currentGameState.isLose():
-        utility=0
-    utility -= food_proximity
+        utility+=0
+    utility -= food_proximity**5
     return utility
 
 class MultiAgentSearchAgent(Agent):
@@ -138,7 +138,7 @@ class MCTSNode:
         # should be called after sufficient iterations
         return self.children[self.select()].parent_action
     
-class MonteCarloTreeSearch(MultiAgentSearchAgent):
+class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
     """
       MCTS Agent
     """
@@ -148,7 +148,7 @@ class MonteCarloTreeSearch(MultiAgentSearchAgent):
         Returns the best action for the given state using MCTS
         """
         rootNode = MCTSNode(state=gameState,eval_fun=self.evaluationFunction)
-        n_itr = 100
+        n_itr = 500
         while n_itr:
             rootNode.iterate()
             n_itr -= 1

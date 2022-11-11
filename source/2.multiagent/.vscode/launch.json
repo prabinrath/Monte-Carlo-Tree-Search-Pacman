@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearch", "-l", "testClassic", "--frameTime", "0"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0"]
         },
         {
             "name": "MCTS:smallClassic",
@@ -20,7 +20,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearch", "-l", "smallClassic", "--frameTime", "0"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0"]
         }
     ]
 }
