@@ -15,7 +15,7 @@
 from util import manhattanDistance
 from game import Directions
 import random, util
-import numpy as np
+import math
 
 from game import Agent
 
@@ -164,139 +164,91 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         """
         "*** YOUR CODE HERE ***"
         util.raiseNotDefined()
-class MCTS:
-    def __init__(self, state, parent=None, parent_action=None):
-        self.state = state
-        self.parent = parent
-        self.parent_action = parent_action
+
+class MCTSNode:
+    def __init__(self, state, parent_action=None, ucb_param=2, max_sim_steps = 100, eval_fun=None):
+        self.avg_value = 0
+        self.visits = 0
         self.children = []
-        self._number_of_visits = 0
-        self.max_nodes = 100
-        self.node_score = 0
-        self.possible_actions = None
-        self.possible_actions = self._possible_actions()
-
-    def evaluationFunction(self, currentGameState, action):
-        """
-        Design a better evaluation function here.
-
-        The evaluation function takes in the current and proposed successor
-        GameStates (pacman.py) and returns a number, where higher numbers are better.
-
-        The code below extracts some useful information from the state, like the
-        remaining food (newFood) and Pacman position after moving (newPos).
-        newScaredTimes holds the number of moves that each ghost will remain
-        scared because of Pacman having eaten a power pellet.
-
-        Print out these variables to see what you're getting, then combine them
-        to create a masterful evaluation function.
-        """
-        # Useful information you can extract from a GameState (pacman.py)
-        successorGameState = currentGameState.generatePacmanSuccessor(action)
-        newPos = successorGameState.getPacmanPosition()
-        newFood = successorGameState.getFood()
-        newGhostStates = successorGameState.getGhostStates()
-        newScaredTimes = [ghostState.scaredTimer for ghostState in newGhostStates]
-
-        "*** YOUR CODE HERE ***"
-        # Imports
-        from util import manhattanDistance as md
-
-        # Better represented information for convenience
-        newFoodList = newFood.asList()
-        successorGameScore = successorGameState.getScore()
-
-        numberOfRemainingFood = len(newFoodList)
-
-        distanceFromFoods = [md(newPos, newFoodPos) for newFoodPos in newFoodList]
-        distanceFromClosestFood = 0 if (len(distanceFromFoods) == 0) else min(distanceFromFoods)
-
-        distancesFromGhosts = [md(newPos, ngs.getPosition()) for ngs in newGhostStates]
-        distanceFromClosestGhost = 0 if (len(distancesFromGhosts) == 0) else min(distancesFromGhosts)
-        finalScore = successorGameScore - (1000 if (distanceFromClosestGhost<=1) else (50/distanceFromClosestGhost)) - 50*numberOfRemainingFood - distanceFromClosestFood
-        # TODO - This score has to be better. 
-        return successorGameScore
-        
-    def _possible_actions(self):
-        if self.state is not None:
-            self.possible_actions = self.state.getLegalActions()
-        else:
-            return None
-        return self.possible_actions
+        self.ucb_param = ucb_param
+        self.game_state = state
+        self.parent_action = parent_action        
+        self.max_sim_steps = max_sim_steps
+        self.eval_fun = eval_fun
     
-    def expand(self):
-        action = self.possible_actions.pop()
-        next_state = self.state.generateSuccessor(0, action)
-        child_node = MCTS(
-            next_state, parent=self, parent_action=action)
-        self.children.append(child_node)
-        return child_node 
-    
-    def rollout(self):
-        current_rollout_state = self.state
-        if self.state is not None:
-            counter  = 0
-            while not current_rollout_state.isWin() and not current_rollout_state.isLose():
-                possible_moves = current_rollout_state.getLegalActions()
-                if counter == self.max_nodes:
-                    reward = self.evaluationFunction(current_rollout_state, possible_moves[np.random.randint(len(possible_moves))])
-                    return reward
-                counter+=1
-                if len(possible_moves) > 0:
-                    action = possible_moves[np.random.randint(len(possible_moves))]
-                else:
-                    if current_rollout_state.isWin():
-                        return 1000
-                    else:
-                        return 0
-                current_rollout_state = current_rollout_state.generateSuccessor(0, action)
-        else:
-            return None
-        if current_rollout_state.isWin():
-            return 1000
-        else:
-            return 0
-            
-    def backpropagate(self, result):
-        self._number_of_visits += 1
-        self.node_score += result
-        if self.parent:
-            self.parent.backpropagate(result)
-
-    def get_parent_action(self):
-        return self.parent_action
-
-    def best_child(self, c_param=2):
-        import numpy as np
-        weights = [(c.node_score) + c_param * np.sqrt((2 * np.log(self._number_of_visits) / c._number_of_visits)) for c in self.children]
-        return self.children[np.argmax(weights)]
-
-    def selection(self):
-        current_node = self
-        print(str(self.state))
-        while len(current_node.state.getLegalActions()) > 0 :
-            if not len(current_node.possible_actions) == 0:
-                return current_node.expand()
+    def iterate(self):
+        if self.is_leaf():
+            if self.visits == 0:
+                # Rollout
+                self.avg_value = self.rollout()
+                self.visits = 1
+                return self.avg_value
             else:
-                current_node = current_node.best_child()
-        return current_node
+                # Expand
+                self.expand()
+
+        # Selection        
+        value = self.children[self.select()].iterate()
+
+        # Backpropagation
+        self.avg_value += value
+        self.visits += 1   
+
+        return value     
+
+    def rollout(self):
+        rollout_state = self.game_state
+        num_agents = rollout_state.getNumAgents()
+        terminal_flag = False
+        sim_itr = 0
+        while not terminal_flag:
+            for agent_id in range(num_agents):
+                sim_itr += 1
+                terminal_flag = rollout_state.isWin() or rollout_state.isLose() or sim_itr > self.max_sim_steps
+                if terminal_flag:
+                    break
+                actions = rollout_state.getLegalActions(agent_id)
+                rollout_state = rollout_state.generateSuccessor(agent_id, random.choice(actions))
+                
+        return self.eval_fun(rollout_state)
+
+
+    def expand(self):
+        # agent_id 0 for pacman
+        for action in self.game_state.getLegalActions(0):
+            successor = self.game_state.generateSuccessor(0, action)
+            self.children.append(MCTSNode(successor, action, self.ucb_param, self.max_sim_steps, self.eval_fun))
+
+    def select(self):
+        ucb1 = [] # to avoid defining a min ucb1 score
+        idx = 0 # to return index directly for rollout
+        for child in self.children:
+            if child.visits > 0:
+                ucb1.append(child.avg_value + self.ucb_param*math.sqrt(math.log(self.visits)/child.visits))
+            else:
+                return idx
+            idx += 1
+        return max(range(len(ucb1)), key=lambda i: ucb1[i])
+
+    def is_leaf(self):
+        return len(self.children) == 0
     
-    def bestAction(self):
-        simulation_no = 100
-        for i in range(simulation_no):
-            v = self.selection()
-            reward = v.rollout()
-            v.backpropagate(reward)
-        return self.best_child()
+    def best_action(self):
+        # should be called after sufficient iterations
+        return self.children[self.select()].parent_action
     
 class MonteCarloTreeSearch(MultiAgentSearchAgent):
     """
-      MCTS Agent (question 4)
+      MCTS Agent
     """
 
     def getAction(self, gameState):
         """
-        Returns the best action for the given state using MCTS and self.evaluationFunction
+        Returns the best action for the given state using MCTS
         """
-        rootNode = MCTS(state=gameState)
-        return rootNode.bestAction().get_parent_action()
+        rootNode = MCTSNode(state=gameState,eval_fun=self.evaluationFunction)
+        n_itr = 100
+        while n_itr:
+            rootNode.iterate()
+            n_itr -= 1
+        return rootNode.best_action()
