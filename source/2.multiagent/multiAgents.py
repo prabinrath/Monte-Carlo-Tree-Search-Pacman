@@ -93,7 +93,6 @@ class MCTSNode:
                 rollout_state = rollout_state.generateSuccessor(agent_id, random.choice(actions))
 
         walls = rollout_state.getWalls()
-        # value = (len(self.game_state.getFood().asList())-len(rollout_state.getFood().asList()))/(walls.width*walls.height)
         value = self.eval_fun(rollout_state, 'food')/(walls.width+walls.height)
         if rollout_state.isWin():
             value += 1
@@ -127,7 +126,7 @@ class MCTSNode:
             pacman_pos = state.getPacmanPosition()
             ghost_proximity = []
             for ghost in ghost_states:
-                ghost_proximity.append(manhattanDistance(ghost.getPosition(), pacman_pos))
+                ghost_proximity.append(manhattanDistance(ghost.getPosition(), pacman_pos)*(1+3*int(ghost.scaredTimer > 0)))
             return min(ghost_proximity)
         elif arg == 'food':
             foods = state.getFood()
@@ -144,7 +143,6 @@ class MCTSNode:
         best_actions = {}
         current_ghost_proximity = self.eval_fun(self.game_state, arg='ghost')
         for child in self.children:
-            # if child.avg_value == best_child.avg_value:
             if abs(child.avg_value - best_child.avg_value) < 1:
                 if current_ghost_proximity < 3:
                     best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='ghost')
