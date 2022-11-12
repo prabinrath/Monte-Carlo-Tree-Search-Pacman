@@ -91,9 +91,10 @@ class MCTSNode:
                     break
                 actions = rollout_state.getLegalActions(agent_id)
                 rollout_state = rollout_state.generateSuccessor(agent_id, random.choice(actions))
-        # value = 0
+
         walls = rollout_state.getWalls()
-        value = (len(self.game_state.getFood().asList())-len(rollout_state.getFood().asList()))/(walls.width*walls.height)
+        # value = (len(self.game_state.getFood().asList())-len(rollout_state.getFood().asList()))/(walls.width*walls.height)
+        value = self.eval_fun(rollout_state, 'food')/(walls.width+walls.height)
         if rollout_state.isWin():
             value += 1
         elif rollout_state.isLose():
@@ -119,20 +120,38 @@ class MCTSNode:
 
     def is_leaf(self):
         return len(self.children) == 0
+
+    def eval_fun(self, state, arg='ghost'):
+        if arg == 'ghost':
+            ghost_states = state.getGhostStates()
+            pacman_pos = state.getPacmanPosition()
+            ghost_proximity = []
+            for ghost in ghost_states:
+                ghost_proximity.append(manhattanDistance(ghost.getPosition(), pacman_pos))
+            return min(ghost_proximity)
+        elif arg == 'food':
+            foods = state.getFood()
+            pacman_pos = state.getPacmanPosition()          
+            food_proximity = []
+            for food in foods.asList():
+                food_proximity.append(1/manhattanDistance(food, pacman_pos))
+            dist = max(food_proximity) if len(food_proximity) > 0 else 0         
+            return dist
     
-    def best_action(self, eval_fun):
+    def best_action(self):
         # should be called after sufficient iterations
         best_child = self.children[self.select()]
         best_actions = {}
-        current_ghost_proximity = eval_fun(self.game_state, arg='ghost')
+        current_ghost_proximity = self.eval_fun(self.game_state, arg='ghost')
         for child in self.children:
             # if child.avg_value == best_child.avg_value:
             if abs(child.avg_value - best_child.avg_value) < 1:
                 if current_ghost_proximity < 3:
-                    best_actions[child.parent_action] = eval_fun(child.game_state, arg='ghost')
+                    best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='ghost')
                 else:
-                    best_actions[child.parent_action] = eval_fun(child.game_state, arg='food') + child.game_state.getScore()
-
+                    best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food') + child.game_state.getScore()
+                    if Directions.STOP in best_actions and len(best_actions)>1:
+                        del best_actions[Directions.STOP]
         action = max(best_actions, key=best_actions.get)
         print("Pacman chose: ", action)
         return action
@@ -151,23 +170,6 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         print("Parent", node.avg_value, node.visits)
         for child in node.children:
             print(child.avg_value, child.visits, child.parent_action)    
-    
-    def eval_state(self, state, arg='ghost'):
-        if arg == 'ghost':
-            ghost_states = state.getGhostStates()
-            pacman_pos = state.getPacmanPosition()
-            ghost_proximity = []
-            for ghost in ghost_states:
-                ghost_proximity.append(manhattanDistance(ghost.getPosition(), pacman_pos))
-            return min(ghost_proximity)
-        elif arg == 'food':
-            foods = state.getFood()
-            pacman_pos = state.getPacmanPosition()          
-            food_proximity = []
-            for food in foods.asList():
-                food_proximity.append(1/manhattanDistance(food, pacman_pos))
-            dist = max(food_proximity) if len(food_proximity) > 0 else 0         
-            return dist
 
     def getAction(self, gameState):
         """
@@ -179,4 +181,4 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
             rootNode.iterate()
             n_itr -= 1
         self.temp_print_mct(rootNode)
-        return rootNode.best_action(eval_fun=self.eval_state)
+        return rootNode.best_action()

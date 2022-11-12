@@ -21,6 +21,15 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "1"]
+        },
+        {
+            "name": "MCTS:mediumClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mediumClassic", "--frameTime", "0", "-n", "1"]
         }
     ]
 }
