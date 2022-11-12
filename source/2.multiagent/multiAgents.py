@@ -91,13 +91,14 @@ class MCTSNode:
                     break
                 actions = rollout_state.getLegalActions(agent_id)
                 rollout_state = rollout_state.generateSuccessor(agent_id, random.choice(actions))
-        value = 0
+        # value = 0
+        walls = rollout_state.getWalls()
+        value = (len(self.game_state.getFood().asList())-len(rollout_state.getFood().asList()))/(walls.width*walls.height)
         if rollout_state.isWin():
-            value = 1
+            value += 1
         elif rollout_state.isLose():
-            value = -1
+            value += -1
         return value
-
 
     def expand(self):
         # agent_id 0 for pacman
@@ -125,7 +126,8 @@ class MCTSNode:
         best_actions = {}
         current_ghost_proximity = eval_fun(self.game_state, arg='ghost')
         for child in self.children:
-            if child.avg_value == best_child.avg_value:
+            # if child.avg_value == best_child.avg_value:
+            if abs(child.avg_value - best_child.avg_value) < 1:
                 if current_ghost_proximity < 3:
                     best_actions[child.parent_action] = eval_fun(child.game_state, arg='ghost')
                 else:
@@ -146,14 +148,9 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
 
     def temp_print_mct(self,node, depth=1):  
         print("***** MCTS ********")
-        print("Parent", node.avg_value, node.visits)      
-        # if len(node.children)==0:
-        #     return        
+        print("Parent", node.avg_value, node.visits)
         for child in node.children:
-            print(child.avg_value, child.visits, child.parent_action)
-        return
-        # for child in node.children:
-        #     self.temp_print_mct(child,depth+1)       
+            print(child.avg_value, child.visits, child.parent_action)    
     
     def eval_state(self, state, arg='ghost'):
         if arg == 'ghost':
@@ -175,7 +172,6 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
     def getAction(self, gameState):
         """
         Returns the best action for the given state using MCTS
-        TODO: scared ghosts, return state score at rollout
         """
         rootNode = MCTSNode(state=gameState)
         n_itr = 50
