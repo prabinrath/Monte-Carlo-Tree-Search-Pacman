@@ -163,7 +163,7 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         MultiAgentSearchAgent.__init__(self)
         self.learn_params = util.Counter()
 
-    def temp_print_mct(self,node, depth=1):  
+    def temp_print_mct(self,node):  
         print("***** MCTS ********")
         print("Parent", node.avg_value, node.visits)
         for child in node.children:
