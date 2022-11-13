@@ -206,7 +206,7 @@ class MCTSQAgent(MultiAgentSearchAgent):
         """
         self.learning_itr += 1
         best_action = None
-        if self.learning_itr < 500:
+        if self.learning_itr < 1000:
             rootNode = MCTSNode(state=gameState)
             n_itr = 10
             while n_itr:
