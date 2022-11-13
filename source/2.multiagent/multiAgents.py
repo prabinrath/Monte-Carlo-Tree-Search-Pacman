@@ -17,7 +17,8 @@ from game import Directions
 import random, util
 import math
 from featureExtractors import *
-from statistics import mean
+from collections import defaultdict, Counter
+import json
 
 from game import Agent
 
@@ -147,11 +148,11 @@ class MCTSNode:
                 if current_ghost_proximity < 3:
                     best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='ghost')
                 else:
-                    best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food') + child.game_state.getScore()
+                    path, _  = closestLoc(self.game_state.getPacmanPosition(), self.game_state.getFood().asList(), self.game_state.getWalls())
+                    best_actions[child.parent_action] = int(child.parent_action == path[0]) if path else 0
                     if Directions.STOP in best_actions and len(best_actions)>1:
                         del best_actions[Directions.STOP]
-        action = max(best_actions, key=best_actions.get)
-        print("Pacman chose: ", action)
+        action = max(best_actions, key=best_actions.get)        
         return action
     
 class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
@@ -161,7 +162,13 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
     def __init__(self, extractor='SimpleExtractor'):
         self.featExtractor = util.lookup(extractor, globals())()
         MultiAgentSearchAgent.__init__(self)
-        self.learn_params = {}
+        self.learn_params = defaultdict(Counter)
+        self.iter = 0
+        self.mode = 'learn'
+        # self.mode = 'play'
+        if self.mode == 'play':
+            f = open('learn_params.json', 'r')
+            self.learn_params = json.loads(f.readline())
 
     def temp_print_mct(self,node):  
         print("***** MCTS ********")
@@ -169,15 +176,36 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         for child in node.children:
             print(child.avg_value, child.visits, child.parent_action)    
 
-    def getAction(self, gameState):
-        """
-        Returns the best action for the given state using MCTS
-        """
+    def MCTSAction(self, gameState):
         rootNode = MCTSNode(state=gameState)
         n_itr = 50
         while n_itr:
             rootNode.iterate()
             n_itr -= 1
         self.temp_print_mct(rootNode)
-        # self.learn_params[]
-        return rootNode.best_action()
+        return rootNode.best_action() 
+
+    def getAction(self, gameState):
+        """
+        Returns the best action for the given state using MCTS
+        """
+        features = self.featExtractor.getMCTSFeatures(gameState)
+        if self.mode == 'learn':
+            self.iter += 1
+            print('Running Iteration: ', self.iter)
+            if self.iter%100 == 0:                
+                f = open('learn_params.json', 'w')
+                f.write(json.dumps(self.learn_params))
+                f.close()
+                print('Saved MCTS params after ', self.iter, ' iterations.')
+            best_action = self.MCTSAction(gameState)            
+            self.learn_params[','.join(features)][best_action] += 1
+        else:
+            query = ','.join(features)
+            if query in self.learn_params:
+                sample = self.learn_params[query]
+                best_action = max(sample, key=sample.get)
+            else:
+                raise Exception('Could not find sample. More training needed.')
+        print("Pacman chose: ", best_action)
+        return best_action
