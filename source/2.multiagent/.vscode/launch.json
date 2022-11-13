@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "3"]
+            "args":["-p", "MCTSQAgent", "-l", "testClassic", "--frameTime", "0", "-n", "1"]
         },
         {
             "name": "MCTS:smallClassic",
@@ -20,7 +20,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "1"]
+            "args":["-p", "MCTSQAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "10"]
         },
         {
             "name": "MCTS:mediumClassic",
@@ -29,7 +29,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mediumClassic", "--frameTime", "0", "-n", "1"]
+            "args":["-p", "MCTSQAgent", "-l", "mediumClassic", "--frameTime", "0", "-n", "1"]
         }
     ]
 }

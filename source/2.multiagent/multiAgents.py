@@ -147,36 +147,83 @@ class MCTSNode:
                 if current_ghost_proximity < 3:
                     best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='ghost')
                 else:
-                    best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food') + child.game_state.getScore()
+                    # best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food') + child.game_state.getScore()
+                    best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food')
                     if Directions.STOP in best_actions and len(best_actions)>1:
                         del best_actions[Directions.STOP]
-        action = max(best_actions, key=best_actions.get)
-        print("Pacman chose: ", action)
+        action = max(best_actions, key=best_actions.get)        
         return action
     
-class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
+class MCTSQAgent(MultiAgentSearchAgent):
     """
       MCTS Agent
     """
-    def __init__(self, extractor='IdentityExtractor'):
+    def __init__(self, extractor='SimpleExtractor'):
         self.featExtractor = util.lookup(extractor, globals())()
         MultiAgentSearchAgent.__init__(self)
         self.learn_params = util.Counter()
+        self.alpha = 0.2
+        self.learning_itr = 0
+        self.discount = 0.9
 
-    def temp_print_mct(self,node, depth=1):  
-        print("***** MCTS ********")
+    def temp_print_mct(self,node):  
+        print("***** MCTS ********", self.learning_itr)
         print("Parent", node.avg_value, node.visits)
         for child in node.children:
             print(child.avg_value, child.visits, child.parent_action)    
+    
+    def getQValue(self, state, action):
+        features = self.featExtractor.getFeatures(state, action)
+        q_val = 0
+        for f in features:
+            q_val += self.learn_params[f]*features[f]
+        return q_val
+
+    def computeValueFromQValues(self, state):
+        q_vals = [self.getQValue(state, action) for action in state.getLegalActions()]
+        if len(q_vals) > 0:
+            return max(q_vals)
+
+        return 0
+
+    def computeActionFromQValues(self, state):
+        q_vals = {action: self.getQValue(state, action) for action in state.getLegalActions()}
+        if len(q_vals) == 0:
+            return None
+
+        if max(q_vals.values()) == 0:            
+            better_actions = []
+            for k in q_vals:
+                if q_vals[k] == 0:
+                    better_actions.append(k)
+            return random.choice(better_actions)
+
+        return max(q_vals, key=q_vals.get)
 
     def getAction(self, gameState):
         """
         Returns the best action for the given state using MCTS
         """
-        rootNode = MCTSNode(state=gameState)
-        n_itr = 50
-        while n_itr:
-            rootNode.iterate()
-            n_itr -= 1
-        self.temp_print_mct(rootNode)
-        return rootNode.best_action()
+        self.learning_itr += 1
+        best_action = None
+        if self.learning_itr < 500:
+            rootNode = MCTSNode(state=gameState)
+            n_itr = 10
+            while n_itr:
+                rootNode.iterate()
+                n_itr -= 1
+            self.temp_print_mct(rootNode)
+            best_action = rootNode.best_action()
+            learned_action = self.computeActionFromQValues(gameState)
+            print("Learned Action: ", learned_action)
+            features = self.featExtractor.getFeatures(gameState, best_action)
+            nextState = gameState.generateSuccessor(0, best_action)
+            reward = nextState.getScore() - gameState.getScore()
+            temporal_diff = (reward+self.discount*self.computeValueFromQValues(nextState)-self.getQValue(gameState, best_action))
+            for f in features:
+                self.learn_params[f] += self.alpha*temporal_diff*features[f]
+        else:    
+            best_action = self.computeActionFromQValues(gameState)
+
+        print("Pacman chose: ", best_action)
+        return best_action
