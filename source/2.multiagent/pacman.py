@@ -620,7 +620,7 @@ def readCommand(argv):
         replayGame(**recorded)
         sys.exit(0)
 
-    return args
+    return args, options
 
 
 def loadAgent(pacman, nographics):
@@ -672,12 +672,16 @@ def replayGame(layout, actions, display):
     display.finish()
 
 
-def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, catchExceptions=False, timeout=30):
+def runGames(option, layout, pacman, ghosts, display, numGames, record, numTraining=0, catchExceptions=False, timeout=30):
     import __main__
+    import time
+    import json
     __main__.__dict__['_display'] = display
 
     rules = ClassicGameRules(timeout)
     games = []
+    game_time = []
+    agent_crashed = [False]*numGames
 
     for i in range(numGames):
         beQuiet = i < numTraining
@@ -691,9 +695,14 @@ def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, c
             rules.quiet = False
         game = rules.newGame(layout, pacman, ghosts,
                              gameDisplay, beQuiet, catchExceptions)
+        start_time = time.time()
         game.run()
+        elapsed_time = round(time.time() - start_time,2)
+        game_time.append(elapsed_time)
         if not beQuiet:
             games.append(game)
+            if game.agentCrashed:
+                agent_crashed[i] = game.agentCrashed
 
         if record:
             import time
@@ -715,6 +724,23 @@ def runGames(layout, pacman, ghosts, display, numGames, record, numTraining=0, c
               (wins.count(True), len(wins), winRate))
         print('Record:       ', ', '.join(
             [['Loss', 'Win'][int(w)] for w in wins]))
+        print('Time Taken:       ', ', '.join([str(time) for time in game_time]))
+
+        comp = {
+            "Pacman_Agent": option.pacman,
+            "Layout": option.layout,
+            "TotalGames": len(games),
+            "#Wins": sum(wins),
+            "#Loss": len(games) - sum(wins),
+            "Scores": scores,
+            "Time": game_time,
+            "Crashed":agent_crashed
+        }
+        comps = json.dumps(comp)
+        fname = ("Pacman_"+option.pacman+"_"+option.layout+"_"+str(option.numGhosts))
+        f = open("./runs/"+fname, "w")
+        f.write(comps)
+        f.close()
 
     return games
 
@@ -730,8 +756,8 @@ if __name__ == '__main__':
 
     > python pacman.py --help
     """
-    args = readCommand(sys.argv[1:])  # Get game components based on input
-    runGames(**args)
+    args, opt = readCommand(sys.argv[1:])  # Get game components based on input
+    runGames(opt,**args)
 
     # import cProfile
     # cProfile.run("runGames( **args )")

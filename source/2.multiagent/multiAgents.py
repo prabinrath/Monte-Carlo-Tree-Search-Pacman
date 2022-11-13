@@ -108,9 +108,6 @@ class MultiAgentSearchAgent(Agent):
         self.depth = int(depth)
 
 class MinimaxAgent(MultiAgentSearchAgent):
-    """
-    Your minimax agent (question 2)
-    """
 
     def getAction(self, gameState):
         """
@@ -136,24 +133,104 @@ class MinimaxAgent(MultiAgentSearchAgent):
         Returns whether or not the game state is a losing state
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
+        def valueMinMax(gameState, depth, agent):
+            if agent==noOfAgents:
+                depth+=1
+                agent=0
+                
+            if self.depth==depth or gameState.isWin() or gameState.isLose():
+                return [self.evaluationFunction(gameState)]
+            
+            elif agent ==0:
+                old_value = -9999999999
+                actions  = gameState.getLegalActions(agent)
+                action_ = ""
+                for action in actions:
+                    # print(gameState.generateSuccessor(agent, action))
+                    new_value=valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1)
+                    if (old_value<new_value[0]):
+                        action_ = action
+                        old_value =  new_value[0]
+                return [old_value,action_]       
+                
+            else:
+                old_value = 9999999999
+                actions  = gameState.getLegalActions(agent)
+                action_ = ""
+                for action in actions:
+                    new_value=valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1)
+                    if (old_value>new_value[0]):
+                        action_ = action
+                        old_value = new_value[0]
+                return [old_value,action_]
+
+        noOfAgents = gameState.getNumAgents()
+        # print(self.depth)
+        ghostAgents = noOfAgents-1
+        ans = valueMinMax(gameState, 0, self.index)
+        return ans[1]
+        
+        # util.raiseNotDefined()
 
 class AlphaBetaAgent(MultiAgentSearchAgent):
-    """
-    Your minimax agent with alpha-beta pruning (question 3)
-    """
 
     def getAction(self, gameState):
         """
         Returns the minimax action using self.depth and self.evaluationFunction
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        def valueMinMax(gameState, depth, agent, alpha, beta):
+            if agent==noOfAgents:
+                depth+=1
+                agent=0
+                
+            if self.depth==depth or gameState.isWin() or gameState.isLose():
+                return [self.evaluationFunction(gameState)]
+            
+            elif agent ==0:
+                old_value = -9999999999
+                actions  = gameState.getLegalActions(agent)
+                action_ = ""
+                for action in actions:
+                    # print(gameState.generateSuccessor(agent, action))
+                    new_value=valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1, alpha , beta)
+                    if (old_value<new_value[0]):
+                        action_ = action
+                        # print(action_)
+                        old_value =  new_value[0]
+                    
+                    if (old_value > beta):
+                        return [old_value]
+                    alpha = max(alpha, old_value)
+                return [old_value,action_]       
+                
+            else:
+                old_value = 9999999999
+                actions  = gameState.getLegalActions(agent)
+                action_ = ""
+                for action in actions:
+                    new_value=valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1, alpha, beta)
+                    # print(new_value)
+                    if (old_value>new_value[0]):
+                        action_ = action
+                        old_value = new_value[0]
+                    
+                    if old_value<alpha:
+                        return [old_value]
+                    beta = min(beta, old_value)
+                return [old_value,action_]
+
+        noOfAgents = gameState.getNumAgents()
+        # print(self.depth)
+        ghostAgents = noOfAgents-1
+        alpha = -99999999
+        beta = 99999999
+        ans = valueMinMax(gameState, 0, self.index, alpha, beta)
+        return ans[1]
+        # util.raiseNotDefined()
 
 class ExpectimaxAgent(MultiAgentSearchAgent):
-    """
-      Your expectimax agent (question 4)
-    """
 
     def getAction(self, gameState):
         """
@@ -163,7 +240,55 @@ class ExpectimaxAgent(MultiAgentSearchAgent):
         legal moves.
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        def valueMinMax(gameState, depth, agent, alpha, beta):
+            if agent==noOfAgents:
+                depth+=1
+                agent=0
+                
+            if self.depth==depth or gameState.isWin() or gameState.isLose():
+                return [self.evaluationFunction(gameState)]
+            
+            elif agent ==0:
+                old_value = -9999999999
+                actions  = gameState.getLegalActions(agent)
+                action_ = ""
+                for action in actions:
+                    new_value=valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1, alpha , beta)
+                    if (old_value<new_value[0]):
+                        action_ = action
+                        old_value =  new_value[0]
+                    
+                    if (old_value > beta):
+                        return [old_value]
+                    alpha = max(alpha, old_value)
+                return [old_value,action_]       
+                
+            else:
+                old_value = 0
+                actions  = gameState.getLegalActions(agent)
+                totalPath = len(actions)
+                prob = totalPath**-1
+                action_ = ""
+                for action in actions:
+                    old_value += prob*valueMinMax(gameState.generateSuccessor(agent, action), depth , agent+1, alpha, beta)[0]
+                    action_ = action
+                    # new_value=valueMinMax(child, depth , agent+1, alpha, beta)
+                    # if (old_value>new_value[0]):
+                    #     action_ = action
+                    #     old_value = new_value[0]
+                    
+                return [old_value,action_]
+
+        noOfAgents = gameState.getNumAgents()
+        # print(self.depth)
+        ghostAgents = noOfAgents-1
+        alpha = -99999999
+        beta = 99999999
+        ans = valueMinMax(gameState, 0, self.index, alpha, beta)
+        return ans[1]
+
+        # util.raiseNotDefined()
+
 class MCTS:
     def __init__(self, state, parent=None, parent_action=None):
         self.state = state
