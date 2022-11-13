@@ -16,6 +16,9 @@ from util import manhattanDistance
 from game import Directions
 import random, util
 import math
+from featureExtractors import *
+from statistics import mean
+
 from game import Agent
 
 class ReflexAgent(Agent):
