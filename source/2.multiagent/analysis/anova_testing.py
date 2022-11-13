@@ -48,9 +48,9 @@ def analysis(data):
 def plot(data):
     x_axis = np.arange(len(LAYOUTS))
     width = 0.1
-    AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score = [], [], []
-    AlphaBetaAgent_time, ExpectimaxAgent_time, MinimaxAgent_time = [], [], []
-    AlphaBetaAgent_win, ExpectimaxAgent_win, MinimaxAgent_win = [], [], []
+    AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
+    AlphaBetaAgent_time, ExpectimaxAgent_time, MinimaxAgent_time,MonteCarloTreeSearchAgent_time = [], [], [], []
+    AlphaBetaAgent_win, ExpectimaxAgent_win, MinimaxAgent_win,MonteCarloTreeSearchAgent_win = [], [], [], []
     for layout in data:
         for agent in data[layout]:
             if agent=="AlphaBetaAgent":
@@ -65,6 +65,10 @@ def plot(data):
                 MinimaxAgent_score.append(data[layout]["MinimaxAgent"]["meanScore"])
                 MinimaxAgent_time.append(data[layout]["MinimaxAgent"]["meanTime"])
                 MinimaxAgent_win.append(data[layout]["MinimaxAgent"]["winPercent"])
+            elif agent=="MonteCarloTreeSearchAgent":
+                MonteCarloTreeSearchAgent_score.append(data[layout]["MonteCarloTreeSearchAgent"]["meanScore"])
+                MonteCarloTreeSearchAgent_time.append(data[layout]["MonteCarloTreeSearchAgent"]["meanTime"])
+                MonteCarloTreeSearchAgent_win.append(data[layout]["MonteCarloTreeSearchAgent"]["winPercent"])
     # print(AlphaBetaAgent_score)
     # print(ExpectimaxAgent_score)
     # print(MinimaxAgent_score)
@@ -72,6 +76,7 @@ def plot(data):
     plt.bar(x_axis -width, AlphaBetaAgent_score, width, label = 'AlphaBetaAgent')
     plt.bar(x_axis, ExpectimaxAgent_score, width, label = 'ExpectimaxAgent')
     plt.bar(x_axis +width, MinimaxAgent_score, width, label = 'MinimaxAgent')
+    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_score, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Scores")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
@@ -81,6 +86,7 @@ def plot(data):
     plt.bar(x_axis -width, AlphaBetaAgent_time, width, label = 'AlphaBetaAgent')
     plt.bar(x_axis, ExpectimaxAgent_time, width, label = 'ExpectimaxAgent')
     plt.bar(x_axis +width, MinimaxAgent_time, width, label = 'MinimaxAgent')
+    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_time, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Time")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
@@ -89,6 +95,7 @@ def plot(data):
     plt.bar(x_axis -width, AlphaBetaAgent_win, width, label = 'AlphaBetaAgent')
     plt.bar(x_axis, ExpectimaxAgent_win, width, label = 'ExpectimaxAgent')
     plt.bar(x_axis +width, MinimaxAgent_win, width, label = 'MinimaxAgent')
+    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_win, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Win Percent")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
