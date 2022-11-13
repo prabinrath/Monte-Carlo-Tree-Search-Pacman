@@ -158,10 +158,10 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
     """
       MCTS Agent
     """
-    def __init__(self, extractor='IdentityExtractor'):
+    def __init__(self, extractor='SimpleExtractor'):
         self.featExtractor = util.lookup(extractor, globals())()
         MultiAgentSearchAgent.__init__(self)
-        self.learn_params = util.Counter()
+        self.learn_params = {}
 
     def temp_print_mct(self,node):  
         print("***** MCTS ********")
@@ -179,4 +179,5 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
             rootNode.iterate()
             n_itr -= 1
         self.temp_print_mct(rootNode)
+        # self.learn_params[]
         return rootNode.best_action()
