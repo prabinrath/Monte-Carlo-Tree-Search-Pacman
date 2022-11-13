@@ -451,7 +451,7 @@ class MCTSNode:
                     if Directions.STOP in best_actions and len(best_actions)>1:
                         del best_actions[Directions.STOP]
         action = max(best_actions, key=best_actions.get)
-        print("Pacman chose: ", action)
+        # print("Pacman chose: ", action)
         return action
     
 class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
@@ -464,10 +464,11 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         self.learn_params = util.Counter()
 
     def temp_print_mct(self,node, depth=1):  
-        print("***** MCTS ********")
-        print("Parent", node.avg_value, node.visits)
+        # print("***** MCTS ********")
+        # print("Parent", node.avg_value, node.visits)
         for child in node.children:
-            print(child.avg_value, child.visits, child.parent_action)    
+            continue
+            # print(child.avg_value, child.visits, child.parent_action)    
 
     def getAction(self, gameState):
         """
