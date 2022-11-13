@@ -74,6 +74,27 @@
             ]
         },
         {
+            "name": "MonteCarloTreeSearchAgent_testClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-p",
+             "MonteCarloTreeSearchAgent", 
+             "-l", 
+             "testClassic",
+             "-n",
+             "10",
+             "--frameTime",
+             "0",
+             "-q",
+             "-c",
+             "--timeout",
+             "120"
+            ]
+        },
+        {
             "name": "AlphaBetaAgent_smallClassic",
             "type": "python",
             "request": "launch",
@@ -140,6 +161,27 @@
              "-c",
              "--timeout",
              "20"
+            ]
+        },
+        {
+            "name": "MonteCarloTreeSearchAgent_smallClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": ["-p",
+             "MonteCarloTreeSearchAgent", 
+             "-l", 
+             "smallClassic",
+             "-n",
+             "10",
+             "--frameTime",
+             "0",
+             "-q",
+             "-c",
+             "--timeout",
+             "120"
             ]
         },
     ]
