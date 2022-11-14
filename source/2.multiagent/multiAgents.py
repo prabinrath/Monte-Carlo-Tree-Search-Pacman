@@ -19,6 +19,7 @@ import math
 from featureExtractors import *
 from collections import defaultdict, Counter
 import json
+import copy
 
 from game import Agent
 
@@ -182,7 +183,7 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         while n_itr:
             rootNode.iterate()
             n_itr -= 1
-        self.temp_print_mct(rootNode)
+        # self.temp_print_mct(rootNode)
         return rootNode.best_action() 
 
     def getAction(self, gameState):
@@ -203,9 +204,12 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         else:
             query = ','.join(features)
             if query in self.learn_params:
-                sample = self.learn_params[query]
+                sample = copy.deepcopy(self.learn_params[query])
                 best_action = max(sample, key=sample.get)
+                while not best_action in gameState.getLegalActions():
+                    del sample[best_action]
+                    best_action = max(sample, key=sample.get)
             else:
                 raise Exception('Could not find sample. More training needed.')
-        print("Pacman chose: ", best_action)
+        # print("Pacman chose: ", best_action)
         return best_action

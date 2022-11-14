@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "3"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "100", "-q"]
         },
         {
             "name": "MCTS:smallClassic",
@@ -20,7 +20,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "1"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "10"]
         },
         {
             "name": "MCTS:mediumClassic",
@@ -30,6 +30,25 @@
             "console": "integratedTerminal",
             "justMyCode": true,
             "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mediumClassic", "--frameTime", "0", "-n", "1"]
+        },
+        {
+            "name": "MCTS:minimaxClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "minimaxClassic", "--frameTime", "0", "-n", "1"]
+        },
+        {
+            "name": "MCTS:mctsmodelClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "50", "-q"]
+            // "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "10"]
         }
     ]
 }

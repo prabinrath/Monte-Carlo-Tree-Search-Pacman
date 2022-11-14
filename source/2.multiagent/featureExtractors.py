@@ -117,13 +117,13 @@ class SimpleExtractor(FeatureExtractor):
         return features
     
     def loc_image(self, loc, foods, ghosts, walls):
-        if foods[loc[0]][loc[1]]:
-            return 'F'
-        if walls[loc[0]][loc[1]]:
-            return 'W'
-        # for g in ghosts:
-        #     if loc == g.getPosition() and g.scaredTimer == 0:
-        #         return 'G'
+        # if foods[loc[0]][loc[1]]:
+        #     return 'F'
+        # if walls[loc[0]][loc[1]]:
+        #     return 'W'
+        for g in ghosts:
+            if loc == g.getPosition() and g.scaredTimer == 0:
+                return 'G'
         return 'N'
 
     def getMCTSFeatures(self, state):
@@ -143,14 +143,14 @@ class SimpleExtractor(FeatureExtractor):
             features.append(path_food[0])
         else:
             features.append('None')
-        ghosts_locs = []
-        for g in ghosts:
-            if g.scaredTimer == 0:
-                ghosts_locs.append(g.getPosition())
-        path_ghost, dist_ghost = closestLoc(state.getPacmanPosition(), ghosts_locs, walls)
-        if dist_ghost:
-            features.append(path_ghost[0]) if dist_ghost < 3 else features.append('None')
-        else:
-            features.append('None')
+        # ghosts_locs = []
+        # for g in ghosts:
+        #     if g.scaredTimer == 0:
+        #         ghosts_locs.append(g.getPosition())
+        # path_ghost, dist_ghost = closestLoc(state.getPacmanPosition(), ghosts_locs, walls)
+        # if dist_ghost:
+        #     features.append(path_ghost[0]) if dist_ghost < 3 else features.append('None')
+        # else:
+        #     features.append('None')
         
         return features
