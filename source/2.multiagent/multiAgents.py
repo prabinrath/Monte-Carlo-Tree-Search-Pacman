@@ -167,9 +167,15 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         self.iter = 0
         self.mode = 'learn'
         # self.mode = 'play'
-        if self.mode == 'play':
+        try:
             f = open('learn_params.json', 'r')
-            self.learn_params = json.loads(f.readline())
+            temp = json.loads(f.readline())
+            for q in temp:
+                for d in temp[q]:
+                    self.learn_params[q][d] = temp[q][d]
+        except:
+            pass
+            
 
     def temp_print_mct(self,node):  
         print("***** MCTS ********")
@@ -183,7 +189,7 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         while n_itr:
             rootNode.iterate()
             n_itr -= 1
-        # self.temp_print_mct(rootNode)
+        self.temp_print_mct(rootNode)
         return rootNode.best_action() 
 
     def getAction(self, gameState):
@@ -193,8 +199,7 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         features = self.featExtractor.getMCTSFeatures(gameState)
         if self.mode == 'learn':
             self.iter += 1
-            print('Running Iteration: ', self.iter)
-            if self.iter%100 == 0:                
+            if self.iter%10 == 0:                
                 f = open('learn_params.json', 'w')
                 f.write(json.dumps(self.learn_params))
                 f.close()
@@ -208,7 +213,11 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
                 best_action = max(sample, key=sample.get)
                 while not best_action in gameState.getLegalActions():
                     del sample[best_action]
-                    best_action = max(sample, key=sample.get)
+                    try:
+                        best_action = max(sample, key=sample.get)
+                    except:
+                        print('Sample not Found. Taking a random action.')
+                        best_action = random.choice(gameState.getLegalActions())
             else:
                 raise Exception('Could not find sample. More training needed.')
         # print("Pacman chose: ", best_action)

@@ -47,8 +47,7 @@
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "50", "-q"]
-            // "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "10"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "10", "-k", "5"]
         }
     ]
 }
