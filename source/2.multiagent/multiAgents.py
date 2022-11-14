@@ -151,6 +151,7 @@ class MCTSNode:
                 else:
                     path, _  = closestLoc(self.game_state.getPacmanPosition(), self.game_state.getFood().asList(), self.game_state.getWalls())
                     best_actions[child.parent_action] = int(child.parent_action == path[0]) if path else 0
+                    # best_actions[child.parent_action] = self.eval_fun(child.game_state, arg='food')
                     if Directions.STOP in best_actions and len(best_actions)>1:
                         del best_actions[Directions.STOP]
         action = max(best_actions, key=best_actions.get)        
