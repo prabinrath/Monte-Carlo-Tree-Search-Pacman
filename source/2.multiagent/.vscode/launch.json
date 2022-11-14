@@ -1,0 +1,53 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MCTS:testClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "100", "-q"]
+        },
+        {
+            "name": "MCTS:smallClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "smallClassic", "--frameTime", "0", "-n", "10"]
+        },
+        {
+            "name": "MCTS:mediumClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mediumClassic", "--frameTime", "0", "-n", "1"]
+        },
+        {
+            "name": "MCTS:minimaxClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "minimaxClassic", "--frameTime", "0", "-n", "1"]
+        },
+        {
+            "name": "MCTS:mctsmodelClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "mctsmodelClassic", "--frameTime", "0", "-n", "10", "-k", "5"]
+        }
+    ]
+}
