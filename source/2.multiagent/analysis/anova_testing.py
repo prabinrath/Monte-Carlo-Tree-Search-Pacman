@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 
-LAYOUTS = ["smallClassic", "testClassic"]
+LAYOUTS = ["smallClassic", "testClassic", "testCustom"] # STARTING LAYOUTS
 
 def getData():
     directory = "../runs"
@@ -80,7 +80,7 @@ def plot(data):
     plt.ylabel("Scores")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
-
+    plt.savefig('score_result.png')
 
     plt.figure("Time")
     plt.bar(x_axis -width, AlphaBetaAgent_time, width, label = 'AlphaBetaAgent')
@@ -90,6 +90,7 @@ def plot(data):
     plt.ylabel("Time")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
+    plt.savefig('time_result.png')
 
     plt.figure("Win Percent")
     plt.bar(x_axis -width, AlphaBetaAgent_win, width, label = 'AlphaBetaAgent')
@@ -99,8 +100,11 @@ def plot(data):
     plt.ylabel("Win Percent")
     plt.xticks(x_axis,LAYOUTS)
     plt.legend()
+    plt.savefig('win_result.png')
     
     plt.show()
+
+    
 
 if __name__ == '__main__':
     data = getData()
