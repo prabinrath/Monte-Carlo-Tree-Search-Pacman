@@ -16,7 +16,6 @@ def getData():
             f_Data = json.loads(f.readline())
             fileName = _fileName.split("_")
             layout = fileName[2]
-            print(layout+"\n\n")
             if layout in LAYOUTS:
                 if layout in data_specific_layout:
                     data_specific_layout[layout].append(f_Data)
@@ -47,7 +46,6 @@ def analysis(data):
     return analysis
 
 def plot(data):
-    print(data)
     x_axis = np.arange(len(LAYOUTS))
     width = 0.1
     AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
