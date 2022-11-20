@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 
-LAYOUTS = ["smallClassic", "testClassic"]
+LAYOUTS = ["smallClassic", "openClassicR", "powerClassic","mediumClassic","trickyClassic"]
 
 def getData():
     directory = "../runs"
@@ -16,6 +16,7 @@ def getData():
             f_Data = json.loads(f.readline())
             fileName = _fileName.split("_")
             layout = fileName[2]
+            print(layout+"\n\n")
             if layout in LAYOUTS:
                 if layout in data_specific_layout:
                     data_specific_layout[layout].append(f_Data)
@@ -46,6 +47,7 @@ def analysis(data):
     return analysis
 
 def plot(data):
+    print(data)
     x_axis = np.arange(len(LAYOUTS))
     width = 0.1
     AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
@@ -69,7 +71,7 @@ def plot(data):
                 MonteCarloTreeSearchAgent_score.append(data[layout]["MonteCarloTreeSearchAgent"]["meanScore"])
                 MonteCarloTreeSearchAgent_time.append(data[layout]["MonteCarloTreeSearchAgent"]["meanTime"])
                 MonteCarloTreeSearchAgent_win.append(data[layout]["MonteCarloTreeSearchAgent"]["winPercent"])
-    # print(AlphaBetaAgent_score)
+
     # print(ExpectimaxAgent_score)
     # print(MinimaxAgent_score)
     plt.figure("Scores")
@@ -105,7 +107,6 @@ def plot(data):
 if __name__ == '__main__':
     data = getData()
     per_layout_values = analysis(data)
-    print(per_layout_values)
     plot(per_layout_values)
     
 

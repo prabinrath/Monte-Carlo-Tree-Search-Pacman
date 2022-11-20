@@ -1,0 +1,1 @@
+{"N,N,N,N,East": {"East": 5, "North": 1}, "N,N,N,N,North": {"North": 5}, "N,N,N,G,North": {"West": 1}, "N,N,G,N,West": {"West": 1}, "N,G,N,N,East": {"North": 1}, "N,G,N,N,West": {"West": 1}, "N,G,N,N,North": {"East": 1}, "N,N,N,N,West": {"West": 1}, "N,N,N,N,South": {"South": 2}}
