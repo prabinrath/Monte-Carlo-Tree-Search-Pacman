@@ -5,13 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Minimax:testClassic",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/pacman.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args":["-p", "MinimaxAgent", "-l", "testClassic", "--frameTime", "0", "-n", "100",]
+        },
+        {
             "name": "MCTS:testClassic",
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/pacman.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "100", "-q"]
+            "args":["-p", "MonteCarloTreeSearchAgent", "-l", "testClassic", "--frameTime", "0", "-n", "100",]
         },
         {
             "name": "MCTS:smallClassic",
