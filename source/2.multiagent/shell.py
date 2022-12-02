@@ -8,9 +8,11 @@ def run(layouts):
     for agent in agents:
         for layout in layouts:
             if layout=="big":
-                timeout = 120
+                timeout = 7*60
+            elif layout=="medium":
+                timeout = 3*60
             else:
-                timeout = 60
+                timeout = 1*60
             print("\n\nWhich Layout "+layout+" and Agent "+agent)
             if agent!="MonteCarloTreeSearchAgent":
                 fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 3 -a depth=3 --frameTime 0 -c --timeout "+str(timeout) 
