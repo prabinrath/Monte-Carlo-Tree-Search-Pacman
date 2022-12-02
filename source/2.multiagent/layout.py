@@ -168,7 +168,6 @@ def getLayout(name, back=2):
 
 
 def tryToLoad(fullname):
-    print(fullname)
     if(not os.path.exists(fullname)):
         return None
     f = open(fullname)
