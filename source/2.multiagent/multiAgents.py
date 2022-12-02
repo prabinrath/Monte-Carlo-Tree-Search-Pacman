@@ -25,7 +25,7 @@ from game import Agent
 
 def scoreEvaluationFunction(currentGameState):
     utility = currentGameState.getScore()
-    return 
+    return utility
 
 class MultiAgentSearchAgent(Agent):
     """

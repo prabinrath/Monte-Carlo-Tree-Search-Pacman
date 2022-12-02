@@ -18,13 +18,13 @@
              "-n",
              "10",
              "-a",
-             "depth=2",
+             "depth=3",
              "--frameTime",
              "0",
-             "-q",
+            //  "-q",
              "-c",
              "--timeout",
-             "20"
+             "120"
             ]
         },
         {
@@ -157,10 +157,10 @@
              "depth=2",
              "--frameTime",
              "0",
-             "-q",
+            //  "-q",
              "-c",
              "--timeout",
-             "20"
+             "120"
             ]
         },
         {
@@ -182,6 +182,16 @@
              "-c",
              "--timeout",
              "120"
+            ]
+        },
+        {
+            "name": "layoutCreation",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/layoutCreation.py",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            "args": [
             ]
         },
     ]

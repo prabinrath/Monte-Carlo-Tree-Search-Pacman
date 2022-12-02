@@ -9,7 +9,7 @@ for agent in agents:
             continue
         print("\n\nWhich Layout "+layout+" and Agent "+agent)
         if agent!="MonteCarloTreeSearchAgent":
-            fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 100 -a depth=2 --frameTime 0 -q -c --timeout 25" 
+            fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 100 -a depth=3 --frameTime 0 -q -c --timeout 120" 
         else:
             fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 100 --frameTime 0 -q -c --timeout 120" 
 
