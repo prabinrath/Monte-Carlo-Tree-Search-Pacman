@@ -1,0 +1,1 @@
+{"Pacman_Agent": "MinimaxAgent", "Layout": "medium3", "TotalGames": 3, "#Wins": 0, "#Loss": 3, "Scores": [49.0, 68.0, 16.0], "Time": [19.66, 69.63, 70.73], "Crashed": [false, true, true]}
