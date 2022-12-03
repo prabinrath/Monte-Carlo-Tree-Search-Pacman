@@ -16,127 +16,10 @@ for i in range(3):
     for j in range(1,31):
         LAYOUTS_NEW.append(LAYOUT_NAME[i]+str(j))
 
-def plot(data):
-    x_axis = np.arange(len(LAYOUTS))
-    width = 0.1
-    AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
-    AlphaBetaAgent_time, ExpectimaxAgent_time, MinimaxAgent_time,MonteCarloTreeSearchAgent_time = [], [], [], []
-    AlphaBetaAgent_win, ExpectimaxAgent_win, MinimaxAgent_win,MonteCarloTreeSearchAgent_win = [], [], [], []
-    for layout in data:
-        for agent in data[layout]:
-            if agent=="AlphaBetaAgent":
-                AlphaBetaAgent_score.append(data[layout]["AlphaBetaAgent"]["meanScore"])
-                AlphaBetaAgent_time.append(data[layout]["AlphaBetaAgent"]["meanTime"])
-                AlphaBetaAgent_win.append(data[layout]["AlphaBetaAgent"]["winPercent"])
-            elif agent=="ExpectimaxAgent":
-                ExpectimaxAgent_score.append(data[layout]["ExpectimaxAgent"]["meanScore"])
-                ExpectimaxAgent_time.append(data[layout]["ExpectimaxAgent"]["meanTime"])
-                ExpectimaxAgent_win.append(data[layout]["ExpectimaxAgent"]["winPercent"])
-            elif agent=="MinimaxAgent":
-                MinimaxAgent_score.append(data[layout]["MinimaxAgent"]["meanScore"])
-                MinimaxAgent_time.append(data[layout]["MinimaxAgent"]["meanTime"])
-                MinimaxAgent_win.append(data[layout]["MinimaxAgent"]["winPercent"])
-            elif agent=="MonteCarloTreeSearchAgent":
-                MonteCarloTreeSearchAgent_score.append(data[layout]["MonteCarloTreeSearchAgent"]["meanScore"])
-                MonteCarloTreeSearchAgent_time.append(data[layout]["MonteCarloTreeSearchAgent"]["meanTime"])
-                MonteCarloTreeSearchAgent_win.append(data[layout]["MonteCarloTreeSearchAgent"]["winPercent"])
-
-    # print(ExpectimaxAgent_score)
-    # print(MinimaxAgent_score)
-    plt.figure("Scores")
-    plt.bar(x_axis -width, AlphaBetaAgent_score, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_score, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_score, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_score, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Scores")
-    plt.xticks(x_axis,LAYOUTS)
-    plt.legend()
-    plt.savefig('score_result.png')
-
-
-    plt.figure("Time")
-    plt.bar(x_axis -width, AlphaBetaAgent_time, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_time, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_time, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_time, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Time")
-    plt.xticks(x_axis,LAYOUTS)
-    plt.legend()
-    plt.savefig('time_result.png')
-
-    plt.figure("Win Percent")
-    plt.bar(x_axis -width, AlphaBetaAgent_win, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_win, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_win, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_win, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Win Percent")
-    plt.xticks(x_axis,LAYOUTS)
-    plt.legend()
-    plt.savefig('win_result.png')
-    
-    plt.show()
-
-def plotCUSTOM(data):
-    x_axis = np.arange(len(CUSTOMLAYOUTS))
-    width = 0.1
-    AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
-    AlphaBetaAgent_time, ExpectimaxAgent_time, MinimaxAgent_time,MonteCarloTreeSearchAgent_time = [], [], [], []
-    AlphaBetaAgent_win, ExpectimaxAgent_win, MinimaxAgent_win,MonteCarloTreeSearchAgent_win = [], [], [], []
-    for layout in data:
-        for agent in data[layout]:
-            if agent=="AlphaBetaAgent":
-                AlphaBetaAgent_score.append(data[layout]["AlphaBetaAgent"]["meanScore"])
-                AlphaBetaAgent_time.append(data[layout]["AlphaBetaAgent"]["meanTime"])
-                AlphaBetaAgent_win.append(data[layout]["AlphaBetaAgent"]["winPercent"])
-            elif agent=="ExpectimaxAgent":
-                ExpectimaxAgent_score.append(data[layout]["ExpectimaxAgent"]["meanScore"])
-                ExpectimaxAgent_time.append(data[layout]["ExpectimaxAgent"]["meanTime"])
-                ExpectimaxAgent_win.append(data[layout]["ExpectimaxAgent"]["winPercent"])
-            elif agent=="MinimaxAgent":
-                MinimaxAgent_score.append(data[layout]["MinimaxAgent"]["meanScore"])
-                MinimaxAgent_time.append(data[layout]["MinimaxAgent"]["meanTime"])
-                MinimaxAgent_win.append(data[layout]["MinimaxAgent"]["winPercent"])
-            elif agent=="MonteCarloTreeSearchAgent":
-                MonteCarloTreeSearchAgent_score.append(data[layout]["MonteCarloTreeSearchAgent"]["meanScore"])
-                MonteCarloTreeSearchAgent_time.append(data[layout]["MonteCarloTreeSearchAgent"]["meanTime"])
-                MonteCarloTreeSearchAgent_win.append(data[layout]["MonteCarloTreeSearchAgent"]["winPercent"])
-
-    # print(ExpectimaxAgent_score)
-    # print(MinimaxAgent_score)
-    plt.figure("Scores")
-    plt.bar(x_axis -width, AlphaBetaAgent_score, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_score, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_score, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_score, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Scores")
-    plt.xticks(x_axis,CUSTOMLAYOUTS)
-    plt.legend()
-    plt.savefig('score_result_custom.png')
-
-
-    plt.figure("Time")
-    plt.bar(x_axis -width, AlphaBetaAgent_time, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_time, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_time, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_time, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Time")
-    plt.xticks(x_axis,CUSTOMLAYOUTS)
-    plt.legend()
-    plt.savefig('time_result_custom.png')
-
-    plt.figure("Win Percent")
-    plt.bar(x_axis -width, AlphaBetaAgent_win, width, label = 'AlphaBetaAgent')
-    plt.bar(x_axis, ExpectimaxAgent_win, width, label = 'ExpectimaxAgent')
-    plt.bar(x_axis +width, MinimaxAgent_win, width, label = 'MinimaxAgent')
-    plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_win, width, label = 'MonteCarloTreeSearchAgent')
-    plt.ylabel("Win Percent")
-    plt.xticks(x_axis,CUSTOMLAYOUTS)
-    plt.legend()
-    plt.savefig('win_result_custom.png')
-    
-    plt.show()
-
 def plotNEW(data):
+    # x_axis = np.arange(len(LAYOUTS))
+    # x_axis = np.arange(len(CUSTOMLAYOUTS))
+
     x_axis = np.arange(len(LAYOUT_CLASS))
     width = 0.1
     AlphaBetaAgent_score, ExpectimaxAgent_score, MinimaxAgent_score, MonteCarloTreeSearchAgent_score = [], [], [], []
@@ -161,8 +44,6 @@ def plotNEW(data):
                 MonteCarloTreeSearchAgent_time.append(data[layout]["MonteCarloTreeSearchAgent"]["meanTime"]/COUNT)
                 MonteCarloTreeSearchAgent_win.append(data[layout]["MonteCarloTreeSearchAgent"]["winPercent"]/COUNT)
 
-    # print(ExpectimaxAgent_score)
-    # print(MinimaxAgent_score)
     plt.figure("Scores")
     plt.bar(x_axis -width, AlphaBetaAgent_score, width, label = 'AlphaBetaAgent')
     plt.bar(x_axis, ExpectimaxAgent_score, width, label = 'ExpectimaxAgent')
@@ -170,6 +51,8 @@ def plotNEW(data):
     plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_score, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Scores")
     plt.xticks(x_axis,LAYOUT_CLASS)
+    # plt.xticks(x_axis,LAYOUTS)
+    # plt.xticks(x_axis,CUSTOMLAYOUTS)
     plt.legend()
     plt.savefig('NEW_SCORES.png')
     plt.show()
@@ -181,6 +64,8 @@ def plotNEW(data):
     plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_time, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Time")
     plt.xticks(x_axis,LAYOUT_CLASS)
+    # plt.xticks(x_axis,LAYOUTS)
+    # plt.xticks(x_axis,CUSTOMLAYOUTS)
     plt.legend()
     plt.savefig('NEW_time.png')
 
@@ -191,6 +76,8 @@ def plotNEW(data):
     plt.bar(x_axis +width*2, MonteCarloTreeSearchAgent_win, width, label = 'MonteCarloTreeSearchAgent')
     plt.ylabel("Win Percent")
     plt.xticks(x_axis,LAYOUT_CLASS)
+    # plt.xticks(x_axis,LAYOUTS)
+    # plt.xticks(x_axis,CUSTOMLAYOUTS)
     plt.legend()
     plt.savefig('NEW_win.png')
     
@@ -233,11 +120,7 @@ def getData():
                 else:
                     _big_layout_data.append(f_Data)
             f.close()
-    # print(_small_layout_data)
-    # print("==============================")
-    # print(medium_layout_data)
-    # print("++++++++++++++++++++++++")
-    # print(big_layout_data)
+
     return _small_layout_data,_medium_layout_data,_big_layout_data
 
 def analysis(data, dataCustom):
@@ -264,7 +147,6 @@ def analysis(data, dataCustom):
     for layout in dataCustom:
         analysisCustom[layout] = {}
         for d in dataCustom[layout]:
-            # print(analysis)
             count, totalScore, totalTime = 0, 0, 0
             for i in range(d['TotalGames']):
                 if not d["Crashed"][i]:
@@ -356,99 +238,45 @@ def analysis2(small_data, medium_data, big_data):
     '''
     print(small_analysis)
     return small_analysis, medium_analysis, big_analysis
-    
+
+def avg(layoutSize):
+    agentAverage = {
+        "ExpectimaxAgent":{
+            "meanScore":0,
+            "meanTime":0,
+            "winPercent":0
+        },
+        "MonteCarloTreeSearchAgent":{
+            "meanScore":0,
+            "meanTime":0,
+            "winPercent":0
+        },
+        "AlphaBetaAgent":{
+            "meanScore":0,
+            "meanTime":0,
+            "winPercent":0
+        },
+        "MinimaxAgent":{
+            "meanScore":0,
+            "meanTime":0,
+            "winPercent":0
+        }
+    }
+    for data,val in layoutSize.items():
+        for d in val:
+            for key,value in d.items():
+                agentAverage[key]["meanScore"]+=value['meanScore']
+                agentAverage[key]["meanTime"]+=value['meanTime']
+                agentAverage[key]["winPercent"]+=value['winPercent']
+
+    return agentAverage
+
 def calAverage(small, medium, big):
     averageValues = {"small": {}, "medium":{}, "big":{}}
-    agentAverage = {
-        "ExpectimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MonteCarloTreeSearchAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "AlphaBetaAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MinimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        }
-    }
-    for data,val in small.items():
-        for d in val:
-            for key,value in d.items():
-                agentAverage[key]["meanScore"]+=value['meanScore']
-                agentAverage[key]["meanTime"]+=value['meanTime']
-                agentAverage[key]["winPercent"]+=value['winPercent']
 
-    averageValues["small"] = agentAverage
-
-    agentAverage = {
-        "ExpectimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MonteCarloTreeSearchAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "AlphaBetaAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MinimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        }
-    }
-    for data,val in medium.items():
-        for d in val:
-            for key,value in d.items():
-                agentAverage[key]["meanScore"]+=value['meanScore']
-                agentAverage[key]["meanTime"]+=value['meanTime']
-                agentAverage[key]["winPercent"]+=value['winPercent']
-    averageValues["medium"] = agentAverage
-    
-    agentAverage = {
-        "ExpectimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MonteCarloTreeSearchAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "AlphaBetaAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        },
-        "MinimaxAgent":{
-            "meanScore":0,
-            "meanTime":0,
-            "winPercent":0
-        }
-    }
-    for data,val in big.items():
-        for d in val:
-            for key,value in d.items():
-                agentAverage[key]["meanScore"]+=value['meanScore']
-                agentAverage[key]["meanTime"]+=value['meanTime']
-                agentAverage[key]["winPercent"]+=value['winPercent']
-    averageValues["big"] = agentAverage 
+    averageValues["small"] = avg(small)
+    averageValues["medium"] = avg(medium)
+    averageValues["big"] = avg(big)
     return averageValues
 
 if __name__ == '__main__':
@@ -458,7 +286,3 @@ if __name__ == '__main__':
     small_per_layout_values, medium_per_layout_values, big_per_layout_values = analysis2(small_data, medium_data, big_data)
     average_all= calAverage(small_per_layout_values, medium_per_layout_values, big_per_layout_values)
     plotNEW(average_all)
-    # plot(per_layout_values)
-    # plotCUSTOM(per_layout_values_custom)
-    
-
