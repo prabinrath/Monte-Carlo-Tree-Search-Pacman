@@ -193,35 +193,38 @@ class MonteCarloTreeSearchAgent(MultiAgentSearchAgent):
         return rootNode.best_action() 
 
     def getAction(self, gameState):
-        """
-        Returns the best action for the given state using MCTS
-        """
-        features = self.featExtractor.getMCTSFeatures(gameState)
-        if self.mode == 'learn':
-            self.iter += 1
-            if self.iter%10 == 0:                
-                f = open('learn_params.json', 'w')
-                f.write(json.dumps(self.learn_params))
-                f.close()
-                print('Saved MCTS params after ', self.iter, ' iterations.')
-            best_action = self.MCTSAction(gameState)            
-            self.learn_params[','.join(features)][best_action] += 1
-        else:
-            query = ','.join(features)
-            if query in self.learn_params:
-                sample = copy.deepcopy(self.learn_params[query])
-                best_action = max(sample, key=sample.get)
-                while not best_action in gameState.getLegalActions():
-                    del sample[best_action]
-                    try:
-                        best_action = max(sample, key=sample.get)
-                    except:
-                        print('Sample not Found. Taking a random action.')
-                        best_action = random.choice(gameState.getLegalActions())
-            else:
-                raise Exception('Could not find sample. More training needed.')
-        # print("Pacman chose: ", best_action)
-        return best_action
+        return self.MCTSAction(gameState)
+
+    # def getAction(self, gameState):
+    #     """
+    #     Returns the best action for the given state using MCTS
+    #     """
+    #     features = self.featExtractor.getMCTSFeatures(gameState)
+    #     if self.mode == 'learn':
+    #         self.iter += 1
+    #         if self.iter%10 == 0:                
+    #             f = open('learn_params.json', 'w')
+    #             f.write(json.dumps(self.learn_params))
+    #             f.close()
+    #             print('Saved MCTS params after ', self.iter, ' iterations.')
+    #         best_action = self.MCTSAction(gameState)            
+    #         self.learn_params[','.join(features)][best_action] += 1
+    #     else:
+    #         query = ','.join(features)
+    #         if query in self.learn_params:
+    #             sample = copy.deepcopy(self.learn_params[query])
+    #             best_action = max(sample, key=sample.get)
+    #             while not best_action in gameState.getLegalActions():
+    #                 del sample[best_action]
+    #                 try:
+    #                     best_action = max(sample, key=sample.get)
+    #                 except:
+    #                     print('Sample not Found. Taking a random action.')
+    #                     best_action = random.choice(gameState.getLegalActions())
+    #         else:
+    #             raise Exception('Could not find sample. More training needed.')
+    #     # print("Pacman chose: ", best_action)
+    #     return best_action
 
 class MinimaxAgent(MultiAgentSearchAgent):
     """
