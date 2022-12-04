@@ -262,6 +262,8 @@ class PacmanGraphics:
         self.infoPane.updateScore(newState.score)
         if 'ghostDistances' in dir(newState):
             self.infoPane.updateGhostDistances(newState.ghostDistances)
+        # if agentState.isPacman:
+        #     saveFrame()
 
     def make_window(self, width, height):
         grid_width = (width-1) * self.gridSize
@@ -272,7 +274,7 @@ class PacmanGraphics:
         begin_graphics(screen_width,
                        screen_height,
                        BACKGROUND_COLOR,
-                       "CS188 Pacman")
+                       "Reflex-MCTS Pacman")
 
     def drawPacman(self, pacman, index):
         position = self.getPosition(pacman)
@@ -720,7 +722,7 @@ def add(x, y):
 # convert -delay 7 -loop 1 -compress lzw -layers optimize frame* out.gif
 # convert is part of imagemagick (freeware)
 
-SAVE_POSTSCRIPT = False
+SAVE_POSTSCRIPT = True
 POSTSCRIPT_OUTPUT_DIR = 'frames'
 FRAME_NUMBER = 0
 import os
