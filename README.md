@@ -5,9 +5,9 @@
 This project presents an implementation of the [Monte-Carlo Tree Search (MCTS)] (https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) method customized for playing the Pacman game with random ghosts. We present an agent **Reflex-MCTS** that utilizes the effectiveness of MCTS for exploration and exploitation but switches to choosing customized reflex actions at critical zones. Throughout this report, we demonstrate that our agent yields consistent win and performance results as opposed to conventional tree-based methods, such as Minimax, Expectimax, and Alpha-Beta Pruning. We analyze different layouts where our agent succeeds and identify possible layouts where our agent performs sub-optimally.
 
 <p align="center">
-  <img width="460" height="300" src="gifs/win_small.gif">
+  <img width="460" height="200" src="gifs/win_small.gif">
   <img width="460" height="300" src="gifs/win_medium.gif">
-  <img width="925" height="925" src="gifs/win_large.gif">
+  <img width="920" height="800" src="gifs/win_large.gif">
 </p>
 
 With successive iterations of MCTS, the agent should find actions most likely to end in a winning scenario. However, our implementation of the vanilla MCTS always lost in the Pacman world. After careful observation, we found that  for states where the agent is in close proximity to the ghosts, almost all of the random action rollouts lead to terminal states where the agent dies. Our rollout evaluation function assigns a fixed negative utility to losing terminal states; hence, by the innate property of the UCB1 function, all children of the root are assigned the same utility. There is no distinction between actions for the root node; thus, MCTS fails to determine the best action. For the remaining report, we use the alias *critical zone* for states where ghosts are nearby the agent.
