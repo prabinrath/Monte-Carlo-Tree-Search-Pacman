@@ -2,7 +2,7 @@
 **CSE 571: AI Team Project @ASU**
 ### Authors: Prabin Kumar Rath, Rahil Hastu, Sai Nikhil Guntur, and Austin Porter
 
-This project presents an implementation of the [Monte-Carlo Tree Search (MCTS)] (https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) method customized for playing the Pacman game with random ghosts. We present an agent **Reflex-MCTS** that utilizes the effectiveness of MCTS for exploration and exploitation but switches to choosing customized reflex actions at critical zones. Throughout this report, we demonstrate that our agent yields consistent win and performance results as opposed to conventional tree-based methods, such as Minimax, Expectimax, and Alpha-Beta Pruning. We analyze different layouts where our agent succeeds and identify possible layouts where our agent performs sub-optimally.
+This project presents an implementation of the [Monte-Carlo Tree Search (MCTS)](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search) method customized for playing the Pacman game with random ghosts. We present an agent **Reflex-MCTS** that utilizes the effectiveness of MCTS for exploration and exploitation but switches to choosing customized reflex actions at critical zones. Throughout this report, we demonstrate that our agent yields consistent win and performance results as opposed to conventional tree-based methods, such as Minimax, Expectimax, and Alpha-Beta Pruning. We analyze different layouts where our agent succeeds and identify possible layouts where our agent performs sub-optimally.
 
 <p align="center">
   <img width="460" height="200" src="gifs/win_small.gif">
