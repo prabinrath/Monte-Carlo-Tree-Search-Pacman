@@ -9,7 +9,7 @@ import json
 # CUSTOMLAYOUTS = ["openClassicR", "openClassicA", "openClassicN", "openClassicP", "mctsmodelClassic"]
 
 LAYOUT_CLASS = ["SMALL", "MEDIUM", "BIG"]
-COUNT=30 #Layouts per Class {small, medium, big}
+COUNT=20 #Layouts per Class {small, medium, big}
 LAYOUTS_NEW = []
 LAYOUT_NAME =[ "small", "medium", "big"]
 for i in range(3):

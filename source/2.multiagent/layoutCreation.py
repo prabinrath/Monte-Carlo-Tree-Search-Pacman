@@ -1,3 +1,4 @@
+'''
 import random
 from math import floor
 
@@ -6,117 +7,117 @@ mediumLayout = [20, 15]
 largeLayout = [35, 20]
 
 # Small Layout
-# numberOfLayouts = 30
-# while numberOfLayouts:
-#     f = open("layouts/small/small"+str(numberOfLayouts)+".lay", "w")
-#     rows = random.randint(5,smallLayout[0]) # 2 rows for walls
-#     columns = random.randint(6, smallLayout[1]) # 2 cols for walls
+numberOfLayouts = 30
+while numberOfLayouts:
+    f = open("layouts/small/small"+str(numberOfLayouts)+".lay", "w")
+    rows = random.randint(5,smallLayout[0]) # 2 rows for walls
+    columns = random.randint(6, smallLayout[1]) # 2 cols for walls
 
-#     totalBlocks = rows*columns
-#     randomNumber = random.randint(60,80) #No of food items in the layout between 75-100%
-#     foodItems = int((totalBlocks*randomNumber)/100)
+    totalBlocks = rows*columns
+    randomNumber = random.randint(60,80) #No of food items in the layout between 75-100%
+    foodItems = int((totalBlocks*randomNumber)/100)
 
-#     itemsLayout = [random.randint(1,rows), "%", foodItems]
+    itemsLayout = [random.randint(1,rows), "%", foodItems]
 
-#     pacmanPos = (random.randint(2,rows-2), random.randint(2, columns-2))
+    pacmanPos = (random.randint(2,rows-2), random.randint(2, columns-2))
 
-#     GHOST = [1,2,3]
-#     noOfGhosts = random.choices(GHOST,weights=(20, 60, 25))
-#     ghostNumbers = noOfGhosts[0]
-#     ghostPos = []
-#     for i in range(ghostNumbers):
-#         indexGhost = (random.randint(2,rows-2), random.randint(2, columns-2))
-#         if pacmanPos==indexGhost or indexGhost in ghostPos:
-#             while pacmanPos!=indexGhost and indexGhost not in ghostPos:
-#                 indexGhost = (random.randint(1,rows), random.randint(1, columns))
-#         ghostPos.append(indexGhost)
+    GHOST = [1,2,3]
+    noOfGhosts = random.choices(GHOST,weights=(20, 60, 25))
+    ghostNumbers = noOfGhosts[0]
+    ghostPos = []
+    for i in range(ghostNumbers):
+        indexGhost = (random.randint(2,rows-2), random.randint(2, columns-2))
+        if pacmanPos==indexGhost or indexGhost in ghostPos:
+            while pacmanPos!=indexGhost and indexGhost not in ghostPos:
+                indexGhost = (random.randint(1,rows), random.randint(1, columns))
+        ghostPos.append(indexGhost)
 
-#     # print(noOfGhosts)
-#     # print(ghostPos)
-#     # print(columns)
-#     for r in range(rows):
-#         line = ""
-#         for c in range(columns):
-#             if (r,c) == pacmanPos:
-#                 # print("P",end="")
-#                 line+="P"
-#                 continue
-#             if (r,c) in ghostPos:
-#                 # print("G",end="")
-#                 line+="G"
-#                 continue
-#             if (r==0 or r==rows-1) or (c==0 or c==columns-1):
-#                 # print("%", end="")
-#                 line+="%"
-#             else:
-#                 randomList = random.choices(itemsLayout, weights=(5, 15, 100))
-#                 index = itemsLayout.index(randomList[0])
-#                 if index==0:
-#                     # print("o",end="")
-#                     line+="o"
-#                 elif index==1:
-#                     # print("%",end="")
-#                     line+="%"
-#                 else:
-#                     # print(".",end="")
-#                     line+="."
-#         f.write(line+"\n")
-#         print(line)
+    # print(noOfGhosts)
+    # print(ghostPos)
+    # print(columns)
+    for r in range(rows):
+        line = ""
+        for c in range(columns):
+            if (r,c) == pacmanPos:
+                # print("P",end="")
+                line+="P"
+                continue
+            if (r,c) in ghostPos:
+                # print("G",end="")
+                line+="G"
+                continue
+            if (r==0 or r==rows-1) or (c==0 or c==columns-1):
+                # print("%", end="")
+                line+="%"
+            else:
+                randomList = random.choices(itemsLayout, weights=(5, 15, 100))
+                index = itemsLayout.index(randomList[0])
+                if index==0:
+                    # print("o",end="")
+                    line+="o"
+                elif index==1:
+                    # print("%",end="")
+                    line+="%"
+                else:
+                    # print(".",end="")
+                    line+="."
+        # f.write(line+"\n")
+        print(line)
     
-#     numberOfLayouts-=1
-#     print("++++++++++++++++++++++++++++++++++++++++++++++++")
+    numberOfLayouts-=1
+    print("++++++++++++++++++++++++++++++++++++++++++++++++")
 
 # # Medium Layout
-# numberOfLayouts = 30
-# while numberOfLayouts:
-#     f = open("layouts/medium/medium"+str(numberOfLayouts)+".lay", "x")
-#     rows = random.randint(13,mediumLayout[0]) # 2 rows for walls
-#     columns = random.randint(8, mediumLayout[1]) # 2 cols for walls
+numberOfLayouts = 30
+while numberOfLayouts:
+    f = open("layouts/medium/medium"+str(numberOfLayouts)+".lay", "x")
+    rows = random.randint(13,mediumLayout[0]) # 2 rows for walls
+    columns = random.randint(8, mediumLayout[1]) # 2 cols for walls
 
-#     totalBlocks = rows*columns
-#     randomNumber = random.randint(60,80) #No of food items in the layout between 75-100%
-#     foodItems = int((totalBlocks*randomNumber)/100)
+    totalBlocks = rows*columns
+    randomNumber = random.randint(60,80) #No of food items in the layout between 75-100%
+    foodItems = int((totalBlocks*randomNumber)/100)
 
-#     itemsLayout = [random.randint(1,rows), "%", foodItems]
+    itemsLayout = [random.randint(1,rows), "%", foodItems]
 
-#     pacmanPos = (random.randint(2,rows-2), random.randint(2, columns-2))
+    pacmanPos = (random.randint(2,rows-2), random.randint(2, columns-2))
 
-#     GHOST = [1,2,3]
-#     noOfGhosts = random.choices(GHOST,weights=(20, 25, 25))
-#     ghostNumbers = noOfGhosts[0]
-#     ghostPos = []
-#     for i in range(ghostNumbers):
-#         indexGhost = (random.randint(2,rows-2), random.randint(2, columns-2))
-#         if pacmanPos==indexGhost or indexGhost in ghostPos:
-#             while pacmanPos!=indexGhost and indexGhost not in ghostPos:
-#                 indexGhost = (random.randint(1,rows), random.randint(1, columns))
-#         ghostPos.append(indexGhost)
+    GHOST = [1,2,3]
+    noOfGhosts = random.choices(GHOST,weights=(20, 25, 25))
+    ghostNumbers = noOfGhosts[0]
+    ghostPos = []
+    for i in range(ghostNumbers):
+        indexGhost = (random.randint(2,rows-2), random.randint(2, columns-2))
+        if pacmanPos==indexGhost or indexGhost in ghostPos:
+            while pacmanPos!=indexGhost and indexGhost not in ghostPos:
+                indexGhost = (random.randint(1,rows), random.randint(1, columns))
+        ghostPos.append(indexGhost)
 
-#     for r in range(rows):
-#         line = ""
-#         for c in range(columns):
-#             if (r,c) == pacmanPos:
-#                 line+="P"
-#                 continue
-#             if (r,c) in ghostPos:
-#                 line+="G"
-#                 continue
-#             if (r==0 or r==rows-1) or (c==0 or c==columns-1):
-#                 line+="%"
-#             else:
-#                 randomList = random.choices(itemsLayout, weights=(5, 25, 100))
-#                 index = itemsLayout.index(randomList[0])
-#                 if index==0:
-#                     line+="o"
-#                 elif index==1:
-#                     line+="%"
-#                 else:
-#                     line+="."
-#         f.write(line+"\n")
-#         print(line)
+    for r in range(rows):
+        line = ""
+        for c in range(columns):
+            if (r,c) == pacmanPos:
+                line+="P"
+                continue
+            if (r,c) in ghostPos:
+                line+="G"
+                continue
+            if (r==0 or r==rows-1) or (c==0 or c==columns-1):
+                line+="%"
+            else:
+                randomList = random.choices(itemsLayout, weights=(5, 25, 100))
+                index = itemsLayout.index(randomList[0])
+                if index==0:
+                    line+="o"
+                elif index==1:
+                    line+="%"
+                else:
+                    line+="."
+        # f.write(line+"\n")
+        print(line)
     
-#     numberOfLayouts-=1
-#     print("++++++++++++++++++++++++++++++++++++++++++++++++")
+    numberOfLayouts-=1
+    print("++++++++++++++++++++++++++++++++++++++++++++++++")
 
 # HARD Layout
 numberOfLayouts = 30
@@ -194,7 +195,7 @@ while numberOfLayouts:
         layoutArray[r].append(line)
         print(line)
     
-    f.write(layoutArray[0][0]+"\n")
+    # f.write(layoutArray[0][0]+"\n")
     for i in range(1,rows-1):
         for j in range(1,columns-1):
             if layoutArray[i][0][j] == ".":
@@ -206,10 +207,11 @@ while numberOfLayouts:
                         splitLayout[j] = "%"
                         joinAgain = "".join(splitLayout)
                         layoutArray[i] = [joinAgain]
-        f.write(layoutArray[i][0]+"\n")
+        # f.write(layoutArray[i][0]+"\n")
     
-    f.write(layoutArray[-1][0]+"\n")
+    # f.write(layoutArray[-1][0]+"\n")
 
     
     numberOfLayouts-=1
     print("++++++++++++++++++++++++++++++++++++++++++++++++")
+'''
