@@ -40,4 +40,11 @@ python ./pacman.py -p MonteCarloTreeSearchAgent -l mediumClassic
 python ./pacman.py -p MonteCarloTreeSearchAgent -l originalClassic
 ```
 ## Run Tests
-
+To run the analysis, first change the directory to the `2.multiagent/analysis` folder
+```
+cd ./source/2.multiagent/analysis
+```
+Run the analysis file using the following command
+```
+python anova_testing.py
+```
