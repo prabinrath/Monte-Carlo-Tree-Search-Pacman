@@ -7,17 +7,17 @@ personRunning = "rahil"
 def run(layouts):
     for agent in agents:
         for layout in layouts:
-            if layout=="big":
+            if layout[:3]=="big":
                 timeout = 7*60
-            elif layout=="medium":
+            elif layout[:6]=="medium":
                 timeout = 3*60
             else:
                 timeout = 1*60
             print("\n\nWhich Layout "+layout+" and Agent "+agent)
             if agent!="MonteCarloTreeSearchAgent":
-                fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 3 -a depth=3 --frameTime 0 -c --timeout "+str(timeout) 
+                fileToRun = "python pacman.py -q -p "+ agent +" -l "+ layout +" -n 3 -a depth=3 --frameTime 0 -c --timeout "+str(timeout) 
             else:
-                fileToRun = "python pacman.py -p "+ agent +" -l "+ layout +" -n 3 --frameTime 0 -c --timeout "+str(timeout)
+                fileToRun = "python pacman.py -q -p "+ agent +" -l "+ layout +" -n 3 --frameTime 0 -c --timeout "+str(timeout)
 
             os.system(fileToRun)
 
