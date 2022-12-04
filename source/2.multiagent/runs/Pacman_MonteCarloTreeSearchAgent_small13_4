@@ -1,1 +1,0 @@
-{"Pacman_Agent": "MonteCarloTreeSearchAgent", "Layout": "small13", "TotalGames": 3, "#Wins": 3, "#Loss": 0, "Scores": [912.0, 918.0, 698.0], "Time": [4.7, 4.26, 6.85], "Crashed": [false, false, false]}

@@ -1,1 +1,0 @@
-{"Pacman_Agent": "AlphaBetaAgent", "Layout": "medium17", "TotalGames": 3, "#Wins": 0, "#Loss": 3, "Scores": [-10.0, -1608.0, -1576.0], "Time": [3.05, 61.05, 59.25], "Crashed": [false, true, false]}

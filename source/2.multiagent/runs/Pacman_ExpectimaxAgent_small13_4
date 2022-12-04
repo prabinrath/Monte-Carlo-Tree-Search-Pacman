@@ -1,1 +1,0 @@
-{"Pacman_Agent": "ExpectimaxAgent", "Layout": "small13", "TotalGames": 3, "#Wins": 0, "#Loss": 3, "Scores": [-570.0, -422.0, -67.0], "Time": [60.47, 60.37, 60.35], "Crashed": [true, true, true]}
