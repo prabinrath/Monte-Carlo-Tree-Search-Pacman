@@ -74,11 +74,13 @@ class MCTSNode:
             else:
                 # Expand
                 self.expand()
-
-        # Selection     
+   
         if len(self.children) == 0:
+            # Special case for terminal states. This rollout will return polarized utilities
+            # This will heavily encourage or discourage a specific trjectory in next iterations
             value = self.rollout()
         else:   
+            # Selection
             value = self.children[self.select()].iterate()
 
         # Backpropagation
