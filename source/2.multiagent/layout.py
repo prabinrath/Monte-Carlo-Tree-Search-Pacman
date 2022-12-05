@@ -141,11 +141,24 @@ def getLayout(name, back=2):
     if name.endswith('.lay'):
         layout = tryToLoad('layouts/' + name)
         if layout == None:
+            layout = tryToLoad('layouts/small/' + name)
+        if layout == None:
+            layout = tryToLoad('layouts/medium/' + name)
+        if layout == None:
+            layout = tryToLoad('layouts/big/' + name)
+        if layout == None:
             layout = tryToLoad(name)
     else:
         layout = tryToLoad('layouts/' + name + '.lay')
         if layout == None:
-            layout = tryToLoad(name + '.lay')
+            layout = tryToLoad('layouts/small/' + name + '.lay')
+        if layout == None:
+            layout = tryToLoad('layouts/medium/' + name+ '.lay')
+        if layout == None:
+            layout = tryToLoad('layouts/big/' + name+ '.lay')
+        if layout == None:
+            layout = tryToLoad(name)
+
     if layout == None and back >= 0:
         curdir = os.path.abspath('.')
         os.chdir('..')
