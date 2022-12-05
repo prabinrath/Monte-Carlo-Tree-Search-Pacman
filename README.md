@@ -25,13 +25,13 @@ Our agent first seeks the best action using MCTS. It switches to reflex mode for
 </p>
 
 ## Run Reflex-MCTS Agent
+**Required: Python 3.10.5**\
 To run the agent, first change directory to the `2.multiagent/` folder
 ```
 cd ./source/2.multiagent/
-```
+``` 
 Run the agent using the following command
 ```bash
-# Env: Python 3.10.5
 # Small Layout
 python ./pacman.py -p MonteCarloTreeSearchAgent -l smallClassic
 # Medium Layout
@@ -40,11 +40,15 @@ python ./pacman.py -p MonteCarloTreeSearchAgent -l mediumClassic
 python ./pacman.py -p MonteCarloTreeSearchAgent -l originalClassic
 ```
 ## Run Tests
-To run the analysis, first change the directory to the `2.multiagent/analysis` folder
+Install dependencies
+```bash
+pip3 install -r requirements.txt
 ```
+To run the analysis, first change the directory to the `2.multiagent/analysis` folder
+```bash
 cd ./source/2.multiagent/analysis
 ```
 Run the analysis file using the following command
-```
+```bash
 python anova_testing.py
 ```
