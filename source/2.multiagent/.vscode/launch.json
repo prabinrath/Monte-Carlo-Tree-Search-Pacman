@@ -18,13 +18,13 @@
              "-n",
              "10",
              "-a",
-             "depth=2",
+             "depth=3",
              "--frameTime",
              "0",
-             "-q",
+            //  "-q",
              "-c",
              "--timeout",
-             "20"
+             "120"
             ]
         },
         {
@@ -157,10 +157,10 @@
              "depth=2",
              "--frameTime",
              "0",
-             "-q",
+            //  "-q",
              "-c",
              "--timeout",
-             "20"
+             "120"
             ]
         },
         {
@@ -184,23 +184,14 @@
             ]
         },
         {
-            "name": "MonteCarloTreeSearchAgent_mediumClassic",
+            "name": "layoutCreation",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/pacman.py",
+            "program": "${workspaceFolder}/layoutCreation.py",
             "console": "integratedTerminal",
             "justMyCode": true,
-            "args": ["-p",
-             "MonteCarloTreeSearchAgent", 
-             "-l", 
-             "mediumClassic",
-             "-n",
-             "10",
-             "--frameTime",
-             "0",
-             "-c",
-             "--timeout",
-             "300"
+            "args": [
+
             ]
         },
     ]

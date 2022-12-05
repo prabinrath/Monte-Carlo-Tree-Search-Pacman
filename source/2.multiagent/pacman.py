@@ -739,9 +739,9 @@ def runGames(option, layout, pacman, ghosts, display, numGames, record, numTrain
         }
         comps = json.dumps(comp)
         fname = ("Pacman_"+option.pacman+"_"+option.layout+"_"+str(option.numGhosts))
-        f = open("./runs/"+fname, "w")
+        '''f = open("./runs/"+fname, "w")
         f.write(comps)
-        f.close()
+        f.close()'''
 
     return games
 
