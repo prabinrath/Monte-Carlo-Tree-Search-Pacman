@@ -1,4 +1,3 @@
-'''
 import random
 from math import floor
 
@@ -9,7 +8,7 @@ largeLayout = [35, 20]
 # Small Layout
 numberOfLayouts = 30
 while numberOfLayouts:
-    f = open("layouts/small/small"+str(numberOfLayouts)+".lay", "w")
+    # f = open("layouts/small/small"+str(numberOfLayouts)+".lay", "w")
     rows = random.randint(5,smallLayout[0]) # 2 rows for walls
     columns = random.randint(6, smallLayout[1]) # 2 cols for walls
 
@@ -70,7 +69,7 @@ while numberOfLayouts:
 # # Medium Layout
 numberOfLayouts = 30
 while numberOfLayouts:
-    f = open("layouts/medium/medium"+str(numberOfLayouts)+".lay", "x")
+    # f = open("layouts/medium/medium"+str(numberOfLayouts)+".lay", "x")
     rows = random.randint(13,mediumLayout[0]) # 2 rows for walls
     columns = random.randint(8, mediumLayout[1]) # 2 cols for walls
 
@@ -122,7 +121,7 @@ while numberOfLayouts:
 # HARD Layout
 numberOfLayouts = 30
 while numberOfLayouts:
-    f = open("layouts/big/big"+str(numberOfLayouts)+".lay", "w")
+    # f = open("layouts/big/big"+str(numberOfLayouts)+".lay", "w")
     rows = random.randint(15,largeLayout[0]) # 2 rows for walls
     columns = random.randint(10, largeLayout[1]) # 2 cols for walls
 
@@ -214,4 +213,3 @@ while numberOfLayouts:
     
     numberOfLayouts-=1
     print("++++++++++++++++++++++++++++++++++++++++++++++++")
-'''
