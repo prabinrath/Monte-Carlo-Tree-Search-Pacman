@@ -27,7 +27,7 @@ Our agent first seeks the best action using MCTS. It switches to reflex mode for
 ## Run Reflex-MCTS Agent
 **Required: Python 3.10.5**\
 To run the agent, first change directory to the `2.multiagent/` folder
-```
+```bash
 cd ./source/2.multiagent/
 ``` 
 Run the agent using the following command
