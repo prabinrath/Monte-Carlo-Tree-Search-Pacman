@@ -1,4 +1,4 @@
-# Monte-Carlo-Tree-Search-Pac-Man
+# Monte-Carlo-Tree-Search-Pacman
 **CSE 571: AI Team Project @ASU**
 ### Authors: Prabin Kumar Rath, Rahil Hastu, Sai Nikhil Guntur, and Austin Porter
 
